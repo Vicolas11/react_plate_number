@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,6 +20,10 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "./src",
+    "./src/index.d.ts",
+    "src/store.tsx",
+    "src/config.ts",
+    "src/utils"
   ]
 }

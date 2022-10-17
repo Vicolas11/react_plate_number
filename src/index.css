@@ -1,13 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-moz-selection {
+  background: #081f38; /* Gecko Browsers */
+  color: #b9c5d1;
+}
+
+::selection {
+  background: #081f38; /* WebKit/Blink Browsers */
+  color: #b9c5d1;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  font-family: "Lato", sans-serif;
+  /* background-color: rgb(17, 24, 39); */
+  background: linear-gradient(to right, rgba(17, 24, 39, 0.97), rgba(17, 24, 39, 1)),
+    url("../public/images/bg.png")
+      no-repeat;
+  background-size: contain;
+  background-position: left;
+  box-sizing: border-box;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+
+/* UPLOAD BUTTON */
+label {
+  display: inline-block;
+  color: white;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
 }

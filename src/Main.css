@@ -1,0 +1,3 @@
+.CaptureBtn:disabled {
+  cursor: not-allowed;
+}
