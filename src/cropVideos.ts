@@ -1,3 +1,4 @@
+import { ValueType } from "./datatypes";
 import axios from "axios";
 
 const createImage = (url: string): Promise<HTMLImageElement> => {
@@ -16,7 +17,13 @@ const getRadianAngle = (degreeValue: any) => {
 // Sent file to the backend
 const uploadFile = async (blob: Blob, format: string) => {
   let error = { status: 0, message: "" };
-  let success = { status: 0, message: "", platenumber: "" };
+  let success = {
+    status: 0,
+    message: "",
+    data: null,
+    threshold: "",
+    file: "",
+  };
   const formData = new FormData();
   formData.append("file", blob, `platenumber.${format}`);
   const url = "http://127.0.0.1:5000/file_upload";
@@ -29,11 +36,13 @@ const uploadFile = async (blob: Blob, format: string) => {
         },
       })
       .then((res) => {
-        // console.log("RES == ", res);
+        console.log("RES == ", res);
         success = {
           message: res.data.message || "Uploaded successfully!",
           status: res.status || 201,
-          platenumber: res.data.platenumber
+          data: res.data.data,
+          threshold: res.data.threshold,
+          file: res.data.file,
         };
         resolve(success);
       })

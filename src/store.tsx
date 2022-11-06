@@ -2,10 +2,10 @@ import { createContext, FC, ReactNode, useEffect, useState } from "react";
 import arrayBufferToBlob from "./utils/arraybuff2buff.util";
 import { setLocalStorage } from "./utils/localstorage.util";
 import { getDB } from "./utils/indexdb.utils";
-import { ContxtType } from "./datatypes";
+import { ContxtType, ValueType } from "./datatypes";
 
 export const PlateNumberContext = createContext<ContxtType>({
-  platenumber: null,
+  data: null,
   file: null,
   threshold: null,
   videosrc: null,
@@ -20,7 +20,8 @@ export const PlateNumberContext = createContext<ContxtType>({
 });
 
 // Init Storage Values
-const plateNumInit = localStorage.getItem("platenumber");
+const plateNumInit = localStorage.getItem("data") as string;
+const plate = JSON.parse(plateNumInit);
 const fileInit = localStorage.getItem("file");
 const thresholdInit = localStorage.getItem("threshold");
 let blobInit: Blob = new Blob();
@@ -36,13 +37,13 @@ blobResult();
 
 const ContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [showCropDialog, setShowCropDialog] = useState<boolean>(false);
-  const [platenumber, setPlatenumber] = useState(plateNumInit);
+  const [data, setPlatenumber] = useState<ValueType>(plate);
   const [active, setActiveTab] = useState<boolean>(false);
   const [threshold, setThreshold] = useState(thresholdInit);
   const [videosrc, setVideosrc] = useState(blobTOString);
   const [file, setFile] = useState(fileInit);
 
-  const addPlatenumber = (value: string) => {
+  const addPlatenumber = (value: ValueType) => {
     setPlatenumber(value);
   };
 
@@ -67,13 +68,13 @@ const ContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   useEffect(() => {
-    setLocalStorage({ platenumber, file, threshold });
-  }, [platenumber, file, threshold, videosrc]);
+    setLocalStorage({ data, file, threshold });
+  }, [data, file, threshold, videosrc]);
 
   return (
     <PlateNumberContext.Provider
       value={{
-        platenumber,
+        data,
         file,
         threshold,
         videosrc,

@@ -1,4 +1,12 @@
-import { ChangeEvent, FC, useRef, useState, MouseEvent, useContext, useEffect } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useRef,
+  useState,
+  MouseEvent,
+  useContext,
+  useEffect,
+} from "react";
 import PanoramaOutlinedIcon from "@mui/icons-material/PanoramaOutlined";
 import MonochromePhotosIcon from "@mui/icons-material/MonochromePhotos";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
@@ -30,7 +38,7 @@ const Main: FC = () => {
   const ctx = useContext(PlateNumberContext);
   const classes = useStyles();
   const {
-    platenumber,
+    data,
     file,
     threshold,
     showCropDialog,
@@ -82,12 +90,13 @@ const Main: FC = () => {
     await clearDB()
       .then(() => {
         localStorage.clear();
-        addPlatenumber("");
+        addPlatenumber({ owner: "", platenum: "", model: "", date: "" });
         addFile("");
         addThreshold("");
         addVideoSrc("");
         setRestDisabled(true);
         setIsDisabled(true);
+        if (videoRef.current) videoRef.current.src = "";
         toast.success("Reset Successfully!", toastStyle);
       })
       .catch((err) => console.log("ERR", err));
@@ -112,8 +121,6 @@ const Main: FC = () => {
         if (videoRef.current) {
           videoRef.current.src = URL.createObjectURL(blob);
         }
-      }
-      if (value !== undefined) {
         setRestDisabled(false);
         setIsDisabled(false);
       }
@@ -121,7 +128,7 @@ const Main: FC = () => {
     getValue();
     console.log(videosrc);
     videosrc && setIsDisabled(false);
-  }, [active, videosrc, platenumber, file, threshold]);
+  }, [active, videosrc, data, file, threshold]);
 
   return (
     <>
@@ -292,17 +299,34 @@ const Main: FC = () => {
                 )}
               </div>
               <div className="my-2">
-                <div className="border-2 border-gray-500 w-full h-[50%] p-6 rounded-xl relative">
+                <div
+                  className={`flex flex-row border-2 border-gray-500 w-full h-[50%] p-4 rounded-xl relative  ${
+                    data?.platenum ? "text-gray-200" : "text-gray-500"
+                  }`}
+                >
                   <p className="absolute top-[-.8rem] bg-[#1f2937] inset-0 w-fit h-fit px-2 mx-auto text-gray-400 font-bold">
-                    PLATE NUMBER
+                    {data?.owner ? 'REGISTERED' : 'NOT REGISTERED'}
                   </p>
-                  <h1
-                    className={`font-bold text-5xl text-center ${
-                      platenumber ? "text-gray-200" : "text-gray-500"
-                    }`}
-                  >
-                    {platenumber ? platenumber : "########"}
-                  </h1>
+                  <div className="flex w-1/2 items-end font-bold text-gray-400 space-y-2 space-x-3">
+                    <div className="">
+                      <h1>OWNER:</h1>
+                      <h1>NUMBER:</h1>
+                    </div>
+                    <div className="">
+                      <h1>{data?.owner ? data.owner : "########"}</h1>
+                      <h1>{data?.platenum ? data.platenum : "########"}</h1>
+                    </div>
+                  </div>
+                  <div className="flex w-1/2 items-end font-bold text-gray-400 space-y-2 space-x-3">
+                    <div className="">
+                      <h1>MODEL:</h1>
+                      <h1>DATE:</h1>
+                    </div>
+                    <div className="">
+                      <h1>{data?.model ? data.model : "########"}</h1>
+                      <h1>{data?.date ? data.date : "########"}</h1>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

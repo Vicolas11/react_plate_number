@@ -25,14 +25,21 @@ export type ErrorType = {
   status: number;
 };
 
+export type ValueType = {
+  owner: string;
+  platenum: string;
+  model: string;
+  date: string;
+};
+
 export type ContxtType = {
-  platenumber: string | null;
+  data: ValueType | null;
   file: string | null;
   threshold: string | null;
   videosrc: string | null;
   showCropDialog: boolean;
   active: boolean;
-  addPlatenumber: (value: string) => void;
+  addPlatenumber: (value: ValueType) => void;
   addFile: (value: string) => void;
   addThreshold: (value: string) => void;
   addVideoSrc: (value: string) => void;
@@ -49,7 +56,7 @@ export interface IConstant {
 }
 
 export interface IStorage {
-  platenumber: string | null;
+  data: ValueType | null;
   file: string | null;
   threshold: string | null;
 }

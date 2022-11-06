@@ -31,9 +31,9 @@ const VideoCropDialog: FC<IVideoCroper> = ({ videoSrc, onCancel }) => {
     try {
       const res: any = await getCroppedImg(videoSrc, cropAreaPxl);
       toast.success(`${res.message}`, toastStyle);
-      addPlatenumber(res.platenumber);
-      addFile("/files/platenumber.jpg");
-      addThreshold("/threshold/threshold.png");
+      addPlatenumber(res.data);
+      addFile(res.file);
+      addThreshold(res.threshold);
       // Close VideoCropDialog when successully
       if (res.status === 201) {
         setActive(true);
